@@ -38,6 +38,10 @@ CALENDAR_FEATURES = (
 CYCLICAL_FEATURES = (
     "hour_sin",
     "hour_cos",
+    "hour_sin2",
+    "hour_cos2",
+    "hour_sin3",
+    "hour_cos3",
     "weekday_sin",
     "weekday_cos",
     "month_sin",
@@ -61,6 +65,12 @@ def add_cyclical(frame: pd.DataFrame) -> pd.DataFrame:
     working = frame.copy()
     working["hour_sin"] = np.sin(2 * np.pi * working["hr"] / 24)
     working["hour_cos"] = np.cos(2 * np.pi * working["hr"] / 24)
+    # Second and third harmonics let a linear model represent the twin commute
+    # peaks; trees simply ignore the redundancy.
+    working["hour_sin2"] = np.sin(4 * np.pi * working["hr"] / 24)
+    working["hour_cos2"] = np.cos(4 * np.pi * working["hr"] / 24)
+    working["hour_sin3"] = np.sin(6 * np.pi * working["hr"] / 24)
+    working["hour_cos3"] = np.cos(6 * np.pi * working["hr"] / 24)
     working["weekday_sin"] = np.sin(2 * np.pi * working["weekday"] / 7)
     working["weekday_cos"] = np.cos(2 * np.pi * working["weekday"] / 7)
     working["month_sin"] = np.sin(2 * np.pi * (working["mnth"] - 1) / 12)
@@ -71,14 +81,21 @@ def add_cyclical(frame: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_demand_history(frame: pd.DataFrame) -> pd.DataFrame:
-    """Lags and rolling means of the target, all shifted to exclude the present."""
+    """Log-transformed lags and rolling means, all shifted to exclude the present.
+
+    The history is stored as ``log1p`` for two reasons: demand spans 1-977 and a
+    level shift of 50 rentals means something very different at 02:00 and at
+    08:00, and a linear model fitted to raw lags extrapolates to physically
+    impossible values (over 4,000 rentals per hour) on the hold-out quarter.
+    """
     working = frame.copy()
+    history = np.log1p(working[TARGET])
     for hours in LAG_HOURS:
-        working[f"demand_lag_{hours}h"] = working[TARGET].shift(hours)
+        working[f"demand_lag_{hours}h"] = history.shift(hours)
     for window in ROLLING_WINDOWS:
         # min_periods tolerates the 165 unobserved hours without producing NaN.
         working[f"demand_roll_{window}h"] = (
-            working[TARGET].shift(1).rolling(window, min_periods=int(window * 0.8)).mean()
+            history.shift(1).rolling(window, min_periods=int(window * 0.8)).mean()
         )
     return working
 
@@ -117,5 +134,5 @@ def split_by_time(
 
 
 def seasonal_naive(frame: pd.DataFrame) -> np.ndarray:
-    """Baseline: the same hour one week earlier."""
-    return frame["demand_lag_168h"].to_numpy(dtype=float)
+    """Baseline: the same hour one week earlier, back on the count scale."""
+    return np.expm1(frame["demand_lag_168h"].to_numpy(dtype=float))
