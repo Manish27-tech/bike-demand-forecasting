@@ -23,15 +23,15 @@
   "strongest_positive_correlations": {
     "atemp": 0.391,
     "temp": 0.395,
-    "demand_lag_24h": 0.819,
-    "demand_lag_1h": 0.841,
-    "demand_lag_168h": 0.877
+    "demand_lag_24h": 0.714,
+    "demand_lag_1h": 0.741,
+    "demand_lag_168h": 0.749
   },
   "strongest_negative_correlations": {
     "hour_sin": -0.408,
     "hour_cos": -0.406,
     "hum": -0.326,
-    "month_cos": -0.242,
-    "doy_cos": -0.222
+    "hour_cos2": -0.247,
+    "month_cos": -0.242
   }
 }
