@@ -101,7 +101,7 @@ table.
 | Gradient boosting | `HistGradientBoostingRegressor(learning_rate=0.06, max_iter=600, max_leaf_nodes=31, min_samples_leaf=30, l2_regularization=1.0, early_stopping=True, validation_fraction=0.1)` |
 
 `RANDOM_STATE = 42` everywhere. Selection rule: lowest mean validation RMSE.
-Gradient boosting won at 52.4 ± 13.2 against ridge's 82.0 ± 13.0.
+Gradient boosting won at 52.9 ± 13.2 against ridge's 82.0 ± 13.0.
 
 ## 6. Metrics
 
