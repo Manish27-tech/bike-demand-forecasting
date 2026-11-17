@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 
 import pandas as pd
-import pytest
 
 from bikedemand import eda
 

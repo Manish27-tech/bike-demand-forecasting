@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from bikedemand.clean import clean_hourly, season_from_month
+from bikedemand.clean import season_from_month
 
 
 def test_grid_is_complete_and_gaps_are_flagged(cleaned_frame):

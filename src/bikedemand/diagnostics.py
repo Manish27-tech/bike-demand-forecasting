@@ -15,7 +15,6 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from bikedemand.config import (  # noqa: E402
@@ -24,7 +23,6 @@ from bikedemand.config import (  # noqa: E402
     FIGURES,
     PALETTE,
     REPORTS,
-    TARGET,
 )
 from bikedemand.model import METRICS_PATH, PREDICTIONS_PATH  # noqa: E402
 
