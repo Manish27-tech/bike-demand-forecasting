@@ -1,0 +1,37 @@
+{
+  "hours": 16750,
+  "date_min": "2011-01-08 00:00:00",
+  "date_max": "2012-12-31 23:00:00",
+  "total_rentals": 3234383,
+  "mean_hourly_demand": 193.1,
+  "median_hourly_demand": 147.0,
+  "max_hourly_demand": 977,
+  "peak_hour": 17,
+  "quietest_hour": 4,
+  "working_day_mean": 197.63,
+  "weekend_mean": 183.45,
+  "busiest_month": "Sep",
+  "quietest_month": "Jan",
+  "weather_means": {
+    "Clear": 208.95,
+    "Heavy rain / snow": 74.33,
+    "Light rain / snow": 113.26,
+    "Mist / cloud": 178.21
+  },
+  "train_hours": 14760,
+  "test_hours": 1990,
+  "strongest_positive_correlations": {
+    "atemp": 0.391,
+    "temp": 0.395,
+    "demand_lag_24h": 0.819,
+    "demand_lag_1h": 0.841,
+    "demand_lag_168h": 0.877
+  },
+  "strongest_negative_correlations": {
+    "hour_sin": -0.408,
+    "hour_cos": -0.406,
+    "hum": -0.326,
+    "month_cos": -0.242,
+    "doy_cos": -0.222
+  }
+}

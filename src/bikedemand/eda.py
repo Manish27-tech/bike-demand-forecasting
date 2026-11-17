@@ -133,7 +133,18 @@ def plot_weather_effects(frame: pd.DataFrame, output_dir: Path = FIGURES) -> Pat
 
 def plot_correlation(frame: pd.DataFrame, output_dir: Path = FIGURES) -> Path:
     _style()
-    columns = ["hr", "temp", "atemp", "hum", "windspeed", "weathersit", "demand_lag_1h", "demand_lag_24h", "demand_lag_168h", TARGET]
+    columns = [
+        "hr",
+        "temp",
+        "atemp",
+        "hum",
+        "windspeed",
+        "weathersit",
+        "demand_lag_1h",
+        "demand_lag_24h",
+        "demand_lag_168h",
+        TARGET,
+    ]
     matrix = frame[columns].corr(numeric_only=True)
     fig, ax = plt.subplots(figsize=(8.5, 7))
     image = ax.imshow(matrix, cmap="RdBu_r", vmin=-1, vmax=1)
@@ -153,7 +164,13 @@ def plot_time_series(frame: pd.DataFrame, output_dir: Path = FIGURES) -> Path:
     ax.plot(weekly.index, weekly.to_numpy(), color="#4C72B0", lw=2, label="7-day mean")
     boundary = pd.Timestamp(TEST_START)
     ax.axvline(boundary, color=PALETTE["predicted"], ls="--", lw=1.6)
-    ax.annotate("hold-out period", (boundary, frame[TARGET].max() * 0.85), xytext=(8, 0), textcoords="offset points", color=PALETTE["predicted"])
+    ax.annotate(
+        "hold-out period",
+        (boundary, frame[TARGET].max() * 0.85),
+        xytext=(8, 0),
+        textcoords="offset points",
+        color=PALETTE["predicted"],
+    )
     ax.set_ylabel("Rentals per hour")
     ax.set_title("Two years of hourly demand with a hard time split")
     ax.legend(loc="upper left")
@@ -178,7 +195,13 @@ def plot_seasonal_hour_boxes(frame: pd.DataFrame, output_dir: Path = FIGURES) ->
     order = ["Winter", "Spring", "Summer", "Fall"]
     data = [frame.loc[frame["season_label"] == season, TARGET].to_numpy() for season in order]
     fig, ax = plt.subplots(figsize=(9, 4.4))
-    ax.boxplot(data, tick_labels=order, showfliers=False, patch_artist=True, boxprops={"facecolor": "#B8CDE8"})
+    ax.boxplot(
+        data,
+        tick_labels=order,
+        showfliers=False,
+        patch_artist=True,
+        boxprops={"facecolor": "#B8CDE8"},
+    )
     ax.set_ylabel("Rentals per hour")
     ax.set_title("Season shifts the level, not the shape, of the daily cycle")
     return _save(fig, "08_seasonal_boxes.png", output_dir)
@@ -202,7 +225,8 @@ def summarise(frame: pd.DataFrame) -> dict[str, object]:
     monthly = frame.groupby("mnth")[TARGET].mean()
     weather = frame.groupby("weather_label", observed=True)[TARGET].mean()
     correlations = (
-        frame[list(NUMERIC_FEATURES) + [TARGET]].corr(numeric_only=True)[TARGET]
+        frame[list(NUMERIC_FEATURES) + [TARGET]]
+        .corr(numeric_only=True)[TARGET]
         .drop(TARGET)
         .sort_values()
     )

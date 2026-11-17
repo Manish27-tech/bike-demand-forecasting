@@ -1,4 +1,4 @@
-﻿"""Convenience entry point so the pipeline works without installing the package.
+"""Convenience entry point so the pipeline works without installing the package.
 
 Usage:
     python run.py download

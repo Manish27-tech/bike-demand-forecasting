@@ -188,12 +188,13 @@ def train_and_evaluate(
     artifact_path: Path = MODEL_ARTIFACT,
     metrics_path: Path = METRICS_PATH,
     predictions_path: Path = PREDICTIONS_PATH,
+    test_start: str = TEST_START,
 ) -> dict[str, Any]:
     """Fit the candidates, score the hold-out quarter and persist everything."""
     import joblib
 
     features = build_features(frame)
-    train, test = split_by_time(features, TEST_START)
+    train, test = split_by_time(features, test_start)
     X_train, y_train = feature_matrix(train)
     X_test, y_test = feature_matrix(test)
 
@@ -225,7 +226,7 @@ def train_and_evaluate(
             (naive_rmse - test_scores[best_name]["rmse"]) / naive_rmse * 100, 2
         ),
         "split": {
-            "test_start": TEST_START,
+            "test_start": test_start,
             "train_hours": int(len(train)),
             "test_hours": int(len(test)),
             "train_end": str(train["timestamp"].max()),

@@ -119,9 +119,7 @@ def feature_matrix(frame: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     return X, y
 
 
-def split_by_time(
-    frame: pd.DataFrame, test_start: str
-) -> tuple[pd.DataFrame, pd.DataFrame]:
+def split_by_time(frame: pd.DataFrame, test_start: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return ``(train, test)`` with a hard boundary and no shuffling."""
     boundary = pd.Timestamp(test_start)
     train = frame[frame["timestamp"] < boundary].reset_index(drop=True)

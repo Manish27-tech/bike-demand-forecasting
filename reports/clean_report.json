@@ -1,0 +1,17 @@
+{
+  "rows_in": 17379,
+  "rows_on_grid": 17544,
+  "duplicate_timestamps": 0,
+  "missing_hours": 165,
+  "observed_rows": 17379,
+  "date_min": "2011-01-01 00:00:00",
+  "date_max": "2012-12-31 23:00:00",
+  "total_rentals": 3292679,
+  "mean_hourly_demand": 189.46,
+  "max_hourly_demand": 977,
+  "share_zero_demand": 0.0,
+  "leakage_columns_dropped": [
+    "casual",
+    "registered"
+  ]
+}

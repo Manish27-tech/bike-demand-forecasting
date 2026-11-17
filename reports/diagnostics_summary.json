@@ -1,0 +1,32 @@
+{
+  "overall_mae": 27.42,
+  "worst_hour": {
+    "hour": 17,
+    "mae": 64.43,
+    "mean_demand": 527.1
+  },
+  "best_hour": {
+    "hour": 4,
+    "mae": 2.67
+  },
+  "mae_by_weather": {
+    "Clear": 26.45,
+    "Mist / cloud": 27.61,
+    "Light rain / snow": 33.86
+  },
+  "daily_bias_range": [
+    -36.42,
+    26.21
+  ],
+  "share_within_25pct": 0.7573,
+  "model_test": {
+    "rmse": 43.95,
+    "mae": 27.42,
+    "r2": 0.9531,
+    "mape": 21.47,
+    "median_ape": 12.78,
+    "bias": -5.325,
+    "n": 1990
+  },
+  "improvement_vs_naive_pct": 61.83
+}

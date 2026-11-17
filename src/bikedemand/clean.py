@@ -42,14 +42,9 @@ def clean_hourly(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, object]]:
     duplicates = int(working["timestamp"].duplicated().sum())
     working = working.sort_values("timestamp").drop_duplicates("timestamp")
 
-    full_index = pd.date_range(
-        working["timestamp"].min(), working["timestamp"].max(), freq="h"
-    )
+    full_index = pd.date_range(working["timestamp"].min(), working["timestamp"].max(), freq="h")
     working = (
-        working.set_index("timestamp")
-        .reindex(full_index)
-        .rename_axis("timestamp")
-        .reset_index()
+        working.set_index("timestamp").reindex(full_index).rename_axis("timestamp").reset_index()
     )
     missing_hours = int(working[TARGET].isna().sum())
 
